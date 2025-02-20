@@ -50,7 +50,7 @@ export default class Logstravaganza extends Plugin {
   }
 
   getOutputFilename(ext: string) {
-    const currentDate = new Date().toISOString().split("T")[0];
+    const currentDate = moment().format("YYYY-MM-DD-hhA");
     const filename = this.settings.fileNameContainsDate
       ? `${this.outputFileBasename}.${currentDate}.${ext}`
       : `${this.outputFileBasename}.${ext}`;
@@ -71,6 +71,7 @@ export default class Logstravaganza extends Plugin {
 
       // Retrieve the file
       const file = await getFile(vault, filename, formatter.contentHead);
+     // TODO: We should check the file size and rotate if it is over a certain size
 
       // Write the log events to the file
       let logEvent: LogEvent | undefined;
